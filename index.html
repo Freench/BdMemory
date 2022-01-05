@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes anniversaires</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+    <div id="app">
+
+        <transition name="custom-classes-transition"
+                    enter-active-class="animated fadeInLeftBig"
+                    leave-active-class="animated fadeOutLeftBig">
+
+            <div class="container d-flex flex-column align-items-center" v-if="myBds" id="my-bds">
+                <div class="form-group" id="header-bds">
+                    <h1>Mes anniversaires</h1>
+                    <input v-model="recherche"  class="form-control" placeholder="Rechercher">
+                </div>
+                <div class="bd-list">
+                    <div class="card mb-3 bd-item" v-for="(bd, index) in filteredNames" :key="bd.name" style="max-width: 540px;">
+                        <div class="row g-0" v-on:click="genereFriend(index), myBds = !myBds, myFriends = !myFriends, new_bd = false">
+                            <div class="col-5">
+                                <img v-bind:src=bd.photo class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-6">
+                                <div class="card-body p-1 ms-1 d-flex flex-column justify-content-between">
+                                    <h5 class="card-title">{{ bd.name}}</h5>
+                                    <p class="card-text m-0"> {{ bd.dateFormated }}</p>
+                                    <p class="card-text m-0"><small class="text-muted">Anniv. dans {{ bd.dayBeforeBd }} jours </small></p>
+                                </div>
+                            </div>
+                            <button v-on:click.stop="removeBd(index)"  type="button" class="btn yellow  btn-sm col-1 d-flex align-items-center justify-content-center"><img src="./logo/delete_outline_white_24dp.svg" class="logo" alt=""></button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="truc d-flex justify-content-center sticky-top">
+                    <button class="btn pink" v-on:click="new_bd = !new_bd" v-if= "!new_bd">Ajouter un anniversaire</button>
+                </div>
+            </div>
+        </transition>
+
+        <transition name="slide-fade">
+            <div id="new-bd" v-if= "new_bd" class="fixed-bottom">
+                <h2 class="title-new-bd">Ajouter un anniversaire</h2>
+                <div class="bd-content">
+                    <div class="form-group">
+                        <label for="new_name" class="form-label mt-4">Nom</label>
+                        <input id="new_name" class="form-control" v-model="new_name" placeholder="Nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_date" class="form-label mt-4">Date de naissance</label>
+                        <input type="date" id="new_date" class="form-control" v-model="new_date" placeholder="Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_photo" class="form-label mt-4">Ajouter une photo</label>
+                        <input type="file" id="new_photo" class="form-control" v-on:change="newPhoto" placeholder="Photo">
+                    </div>
+                    <button class="btn pink" v-on:click="addBd">Ajouter l'anniversaire</button>
+                    <button class="btn yellow" v-on:click="new_bd = !new_bd">Annuler</button>
+
+                </div>
+            </div>
+        </transition>
+
+        <transition name="custom-classes-transition"
+                    enter-active-class="animated fadeInRightBig"
+                    leave-active-class="animated fadeOutRightBig">
+            <div id="friend" v-if="myFriends" class="container">
+                <button v-on:click="myFriends = !myFriends, myBds = !myBds, new_gift = false"  type="button" class="btn btn-sm"><img src="./logo/arrow_back_white_24dp.svg" class="logo" alt=""></button>
+
+                <div class="header-friend d-flex flex-column align-items-center">
+                    <img class="photo-profil" v-bind:src=friend.photo alt="Photo de votre ami" >
+                    <h2 class="friend-name">{{ friend.name }}</h2>
+                    <div>{{ friend.dateFormated }}</div>
+                </div>
+                <div id="friend-content" class="p-3">
+                    <h4>Liste des cadeaux offerts:</h4>
+                        <input v-model="rechercheGifts"  class="form-control" placeholder="Rechercher">
+                        <div  v-for="(gift, indexGift) in filteredGifts" class="list-cadeaux d-flex flex-column align-items-start ms-3">
+                            <div>
+                                <div v-on:click="removeGift(indexGift)" class="gift-item">{{ gift[0] }}  :  {{ gift[1] }}</div>
+                            </div>
+                        </div>
+                        <button class="btn col-blue" v-on:click="new_gift = !new_gift">Ajouter un cadeau</button>
+                </div>
+            </div>
+        </transition>
+
+        <transition name="slide-fade">
+            <div id="new-gift" v-if= "new_gift" class="fixed-bottom">
+                <h2 class="title-new-bd">Ajouter un cadeau</h2>
+                <div class="bd-content">
+                    <div class="form-group">
+                        <label for="new_gift_name" class="form-label mt-2">Nom</label>
+                        <input id="new_gift_name" class="form-control" v-model="newGiftName" placeholder="Nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="newGiftDate" class="form-label mt-4">Cadeau de l'année</label>
+                        <input id="newGiftDate" class="form-control" type="text" v-model="newGiftDate"/>
+                    </div>
+                    <button class="btn pink" v-on:click="addGift(), new_gift = !new_gift">Ajouter le cadeau</button>
+                    <button class="btn yellow" v-on:click="new_gift = !new_gift">Annuler</button>
+
+                </div>
+            </div>
+        </transition>
+    </div>
+
+
+    <script src="script.js">
+
+
+    // Check that service workers are supported
+</script>
+
+  <script type="module">
+
+if ('serviceWorker' in navigator) {
+    // Use the window load event to keep the page load performant
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js');
+    });
+  }
+  </script>
+</body>
+</html>
+

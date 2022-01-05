@@ -1,0 +1,147 @@
+html{
+    background: url('./image/11773.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+body{
+    background: none;
+}
+.btn{
+    margin: 10px 0;
+}
+.container{
+    width: 90%;
+}
+.my-bds{
+    position: fixed;
+}
+#app{
+    overflow: hidden;
+}
+#new-bd{
+    box-sizing: border-box;
+    width: 96%;
+    margin: auto;
+    margin-bottom: 2vw;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid #6043ffd6;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.title-new-bd{
+    background-color: #6043ffd6;
+    color: rgb(255, 255, 255);
+    line-height: 40px;
+    padding-left: 5%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.bd-content{
+    width: 90%;
+    margin: auto;
+}
+
+.bd-item{
+    padding-right: 4px;
+}
+#header-bds{
+    margin: 50px 0px;
+}
+.logo{
+    width: 28px;
+}
+.green{
+    background-color: #6edf77;
+}
+.blue{
+    background-color: #6043ff;
+}
+.col-blue{
+    color: #3439d1;
+    font-weight: 500;
+}
+.pink{
+    background-color: #ff64b0;
+}
+.yellow{
+    background-color: #d4c874;
+}
+.img-fluid{
+    height: 100%;
+    object-fit: cover;
+}
+#new-gift{
+    width: 90%;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 6px;
+    margin-bottom: 20px;
+
+}
+#friend{
+    width: 90%;
+    margin: auto;
+}
+.photo-profil{
+    width: 70%;
+    border-radius: 500px;
+    align-items: flex-start;
+}
+.header-friend{
+    margin-bottom: 20px;
+    color: white;
+}
+.friend-name{
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+#friend-content{
+    background-color:rgba(255, 236, 236, 0.4);
+    border-radius: 20px;
+}
+label{
+    margin-top: 10px;
+}
+.gift-item:hover{
+    text-decoration-line: line-through;
+    cursor: pointer;
+}
+h4{
+    font-size: 18px;
+}
+
+
+/* Transition */
+
+.slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+.slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+.slide-fade-enter, .slide-fade-leave-to {
+    transform: translateY(50vh);
+    opacity: 0;
+  }
+
+
+.lateral-slide-enter-active {
+    transition: all .3s ease;
+  }
+.lateral-slide-leave-active {
+    transition: all .3s reverse;
+  }
+.lateral-slide-enter, .lateral-slide-leave-to {
+    transform: translateX(100vw);
+  }
+
+.fadeInRightBig, .fadeOutRightBig{
+    position: absolute;
+    top: 0px;
+    left: 5vw;
+    height: 100vh;
+}
+/* .fadeOutLeftBig .truc, .fadeInLeftBig .truc{
+    position: absolute;
+    bottom: 2vh;
+} */
